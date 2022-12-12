@@ -1,8 +1,3 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[ ]:
-
 
 import argparse
 import os
@@ -21,7 +16,6 @@ from loss import GeneratorLoss
 from model import Generator, Discriminator
 
 
-# In[ ]:
 
 
 CROP_SIZE = 64
@@ -29,7 +23,6 @@ UPSCALE_FACTOR = 4
 NUM_EPOCHS = 100
 
 
-# In[ ]:
 
 
 train_set = TrainDatasetFromFolder('data/trainHR', crop_size=CROP_SIZE, upscale_factor=UPSCALE_FACTOR)
@@ -38,7 +31,6 @@ train_loader = DataLoader(dataset=train_set, num_workers=4, batch_size=64, shuff
 val_loader = DataLoader(dataset=val_set, num_workers=4, batch_size=1, shuffle=False)
 
 
-# In[ ]:
 
 
 netG = Generator(UPSCALE_FACTOR)
@@ -48,7 +40,6 @@ print('# discriminator parameters:', sum(param.numel() for param in netD.paramet
 generator_criterion = GeneratorLoss()
 
 
-# In[ ]:
 
 
 if torch.cuda.is_available():
@@ -62,7 +53,6 @@ optimizerD = optim.Adam(netD.parameters())
 results = {'d_loss': [], 'g_loss': [], 'd_score': [], 'g_score': [], 'psnr': []}
 
 
-# In[ ]:
 
 
 if __name__ == '__main__':
@@ -99,7 +89,7 @@ if __name__ == '__main__':
             # (2) Update G network: minimize 1-D(G(z)) + Perception Loss + Image Loss + TV Loss
             ###########################
             netG.zero_grad()
-            ## The two lines below are added to prevent runetime error in Google Colab ##
+            ##
             fake_img = netG(z)
             fake_out = netD(fake_img).mean()
             ##
@@ -125,9 +115,6 @@ if __name__ == '__main__':
                 running_results['g_score'] / running_results['batch_sizes']))
     
         netG.eval()
-        out_path = 'training_results/SRF_' + str(UPSCALE_FACTOR) + '/'
-        if not os.path.exists(out_path):
-            os.makedirs(out_path)
         
         with torch.no_grad():
             val_bar = tqdm(val_loader)
