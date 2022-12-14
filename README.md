@@ -4,6 +4,12 @@
  [Photo-Realistic Single Image Super-Resolution Using a Generative Adversarial Network](https://arxiv.org/abs/1609.04802).
 
 ## Requirements
+### Python
+Unfortunately the latest version of PyTorch only works with python==3.7-3.9 
+
+If you have python >3.9, then please uninstall that and install python==3.9 from [here](https://www.python.org/ftp/python/3.9.0/python-3.9.0-amd64.exe).
+
+### Python Libraries
 - PyTorch
 ```
 pip install torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cu117
